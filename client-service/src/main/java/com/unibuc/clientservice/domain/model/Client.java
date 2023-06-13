@@ -1,4 +1,4 @@
-package com.unibuc.clientserver.domain.model;
+package com.unibuc.clientservice.domain.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Client {
+public class Client extends RepresentationModel<Client> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

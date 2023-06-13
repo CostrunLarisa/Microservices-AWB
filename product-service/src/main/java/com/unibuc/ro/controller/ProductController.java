@@ -1,8 +1,8 @@
 package com.unibuc.ro.controller;
 
-import com.unibuc.ro.model.Product;
-import com.unibuc.ro.model.ProductRequest;
-import com.unibuc.ro.service.ProductService;
+import com.unibuc.ro.domain.model.Product;
+import com.unibuc.ro.application.dto.ProductRequest;
+import com.unibuc.ro.domain.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

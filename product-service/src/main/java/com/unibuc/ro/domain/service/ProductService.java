@@ -1,10 +1,11 @@
-package com.unibuc.ro.service;
+package com.unibuc.ro.domain.service;
 
-import com.unibuc.ro.exception.EntityAlreadyExistsException;
-import com.unibuc.ro.exception.EntityNotFoundException;
-import com.unibuc.ro.model.Product;
-import com.unibuc.ro.model.ProductRequest;
-import com.unibuc.ro.repository.ProductRepository;
+import com.unibuc.ro.application.mapper.ProductMapper;
+import com.unibuc.ro.common.exception.EntityAlreadyExistsException;
+import com.unibuc.ro.common.exception.EntityNotFoundException;
+import com.unibuc.ro.domain.model.Product;
+import com.unibuc.ro.application.dto.ProductRequest;
+import com.unibuc.ro.domain.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
     public Product findById(Long id) {
         Optional<Product> productFound = productRepository.findById(id);
@@ -36,6 +38,7 @@ public class ProductService {
 
     public Product updateById(Long id, ProductRequest productRequest) {
         Product product = findById(id);
+        productRepository.save(productMapper.toProduct(productRequest));
         return Product.builder().build();
     }
 }

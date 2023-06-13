@@ -1,4 +1,4 @@
-package com.unibuc.ro.exception;
+package com.unibuc.ro.common.exception;
 
 import lombok.NoArgsConstructor;
 

@@ -3,6 +3,7 @@ package com.unibuc.ro.service;
 import com.unibuc.ro.exception.EntityAlreadyExistsException;
 import com.unibuc.ro.exception.EntityNotFoundException;
 import com.unibuc.ro.model.Product;
+import com.unibuc.ro.model.ProductRequest;
 import com.unibuc.ro.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,10 @@ public class ProductService {
     public void deleteById(Long id) {
         findById(id);
         productRepository.deleteById(id);
+    }
+
+    public Product updateById(Long id, ProductRequest productRequest) {
+        Product product = findById(id);
+        return Product.builder().build();
     }
 }

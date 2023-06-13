@@ -1,6 +1,7 @@
 package com.unibuc.ro.controller;
 
 import com.unibuc.ro.model.Product;
+import com.unibuc.ro.model.ProductRequest;
 import com.unibuc.ro.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,5 +23,11 @@ public class ProductController {
     public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id) {
         productService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody ProductRequest productRequest) {
+        Product productUpdated = productService.updateById(id, productRequest);
+        return new ResponseEntity<>(productUpdated, HttpStatus.OK);
     }
 }

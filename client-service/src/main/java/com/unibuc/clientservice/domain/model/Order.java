@@ -1,4 +1,4 @@
-package com.unibuc.clientserver.domain.model;
+package com.unibuc.clientservice.domain.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,5 +12,5 @@ import javax.persistence.Table;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Order {
+public class Order extends RepresentationModel<Order>{
 }

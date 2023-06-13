@@ -1,10 +1,13 @@
-package com.unibuc.clientserver.controller;
+package com.unibuc.clientservice.controller;
 
-import com.unibuc.clientserver.domain.dto.ClientDto;
-import com.unibuc.clientserver.domain.model.Client;
-import com.unibuc.clientserver.service.ClientService;
-import com.unibuc.clientserver.utils.ClientMapper;
-import io.swagger.annotations.Api;
+import com.unibuc.clientservice.domain.dto.ClientDto;
+import com.unibuc.clientservice.domain.model.Client;
+import com.unibuc.clientservice.service.ClientService;
+import com.unibuc.clientservice.utils.ClientMapper;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.hateoas.Link;
 
 
 import java.util.List;
@@ -21,7 +25,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/clients")
 @Validated
-@Api(value = "/clients", tags = "Clients")
+@Slf4j
 public class ClientController {
     private final ClientService clientService;
     private ClientMapper clientMapper = new ClientMapper();
@@ -34,6 +38,13 @@ public class ClientController {
     @Operation(method = "GET", summary = "Get all clients")
     @GetMapping
     public ResponseEntity<List<ClientDto>> getAll() {
+        List<Client> clientList = clientService.getAllClients();
+        for(Client client :clientList){
+            Link selfLink = linkTo(methodOn(ClientController.class).getByEmail(client.getEmail())).withSelfRel();
+            client.add(selfLink);
+            Link deleteLink = linkTo(methodOn(ClientController.class).deleteClientByEmail(client.getEmail())).withRel("deleteClientByEmail");
+            client.add(deleteLink);
+        }
         return new ResponseEntity<>(clientService.getAllClients()
                 .stream()
                 .map(this.clientMapper::entityToDto)

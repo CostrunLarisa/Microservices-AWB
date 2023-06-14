@@ -1,6 +1,6 @@
-package com.unibuc.clientservice.repository;
+package com.unibuc.ro.repository;
 
-import com.unibuc.clientservice.domain.model.Client;
+import com.unibuc.ro.domain.model.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.unibuc.clientservice.exception;
+package com.unibuc.ro.exception;
 
 public class ClientAlreadyExistsException extends RuntimeException {
     public ClientAlreadyExistsException(String message) {

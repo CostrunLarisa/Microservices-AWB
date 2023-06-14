@@ -1,4 +1,4 @@
-package com.unibuc.clientservice.exception;
+package com.unibuc.ro.exception;
 
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;

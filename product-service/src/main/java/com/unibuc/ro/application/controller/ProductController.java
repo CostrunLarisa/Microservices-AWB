@@ -1,5 +1,6 @@
-package com.unibuc.ro.controller;
+package com.unibuc.ro.application.controller;
 
+import com.unibuc.ro.application.dto.ProductResponse;
 import com.unibuc.ro.domain.model.Product;
 import com.unibuc.ro.application.dto.ProductRequest;
 import com.unibuc.ro.domain.service.ProductService;
@@ -26,8 +27,8 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody ProductRequest productRequest) {
-        Product productUpdated = productService.updateById(id, productRequest);
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable("id") Long id, @RequestBody ProductRequest productRequest) {
+        ProductResponse productUpdated = productService.updateById(id, productRequest);
         return new ResponseEntity<>(productUpdated, HttpStatus.OK);
     }
 }

@@ -16,6 +16,6 @@ public interface ProductProxy {
     List<ProductResponse> getAll();
     @RequestMapping(method = RequestMethod.DELETE, value = "/products/{id}")
     void deleteById(Long id);
-    @RequestMapping(method = RequestMethod.PUT, value = "/products/{id}")
-    ProductResponse updateById(Long id, ProductRequest productRequest);
+//    @RequestMapping(method = RequestMethod.PUT, value = "/products/{id}")
+//    ProductResponse updateById(Long id, ProductRequest productRequest);
 }

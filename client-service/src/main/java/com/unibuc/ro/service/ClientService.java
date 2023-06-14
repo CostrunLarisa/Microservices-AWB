@@ -1,10 +1,10 @@
-package com.unibuc.clientservice.service;
+package com.unibuc.ro.service;
 
-import com.unibuc.clientservice.domain.model.Client;
-import com.unibuc.clientservice.repository.ClientRepository;
-import com.unibuc.clientservice.exception.ClientNotFoundException;
-import com.unibuc.clientservice.exception.ClientAlreadyExistsException;
-import com.unibuc.clientservice.utils.Constants;
+import com.unibuc.ro.domain.model.Client;
+import com.unibuc.ro.repository.ClientRepository;
+import com.unibuc.ro.exception.ClientNotFoundException;
+import com.unibuc.ro.exception.ClientAlreadyExistsException;
+import com.unibuc.ro.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.unibuc.clientservice.service;
+package com.unibuc.ro.service;
 
 import org.springframework.cloud.openfeign.FeignClient;
 

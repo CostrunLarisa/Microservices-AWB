@@ -1,4 +1,4 @@
-package com.unibuc.clientservice;
+package com.unibuc.ro;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

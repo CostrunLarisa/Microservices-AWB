@@ -1,4 +1,4 @@
-package com.unibuc.clientservice.domain.model;
+package com.unibuc.ro.domain.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

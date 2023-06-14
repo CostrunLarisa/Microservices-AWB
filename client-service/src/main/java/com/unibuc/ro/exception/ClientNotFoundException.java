@@ -1,4 +1,4 @@
-package com.unibuc.clientservice.exception;
+package com.unibuc.ro.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,6 +1,5 @@
-package com.unibuc.clientservice.domain.dto;
+package com.unibuc.ro.domain.dto;
 
-import com.unibuc.clientservice.domain.model.Order;
 import lombok.Data;
 import org.springframework.hateoas.RepresentationModel;
 

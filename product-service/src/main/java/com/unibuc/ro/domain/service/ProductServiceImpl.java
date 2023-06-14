@@ -7,11 +7,12 @@ import com.unibuc.ro.common.exception.EntityAlreadyExistsException;
 import com.unibuc.ro.common.exception.EntityNotFoundException;
 import com.unibuc.ro.domain.model.Product;
 import com.unibuc.ro.domain.repository.ProductRepository;
-import com.unibuc.ro.domain.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -24,13 +25,20 @@ public class ProductServiceImpl implements ProductService {
         return productFound.orElseThrow(() -> new EntityNotFoundException("Product"));
     }
 
-    public void save(Product product) {
+    public ProductResponse save(ProductRequest productRequest) {
         try {
-            findById(product.getId());
+            findByName(productRequest.getName());
             throw new EntityAlreadyExistsException("Product");
         } catch (EntityNotFoundException e) {
+            Product product = productMapper.toProduct(productRequest);
             productRepository.save(product);
+            return productMapper.toProductResponse(product);
         }
+    }
+
+    public Product findByName(String name) {
+        Optional<Product> productFound = productRepository.findProductByName(name);
+        return productFound.orElseThrow(() -> new EntityNotFoundException("Product"));
     }
 
     public void deleteById(Long id) {
@@ -42,5 +50,11 @@ public class ProductServiceImpl implements ProductService {
         Product product = findById(id);
         productRepository.save(productMapper.toProduct(productRequest));
         return productMapper.toProductResponse(product);
+    }
+
+    @Override
+    public List<ProductResponse> findAll() {
+        List<Product> products = productRepository.findAll();
+        return products.stream().map(product -> productMapper.toProductResponse(product)).collect(Collectors.toList());
     }
 }

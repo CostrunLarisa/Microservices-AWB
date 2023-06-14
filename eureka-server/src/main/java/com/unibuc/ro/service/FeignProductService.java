@@ -1,14 +1,18 @@
-package com.unibuc.ro.application.service;
+package com.unibuc.ro.service;
 
 import com.unibuc.ro.application.dto.ProductRequest;
 import com.unibuc.ro.application.dto.ProductResponse;
-import com.unibuc.ro.domain.model.Product;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
+
 @FeignClient("product-client")
 public interface FeignProductService {
     @RequestMapping("/products")
-    void save(Product product);
+    ProductResponse save(ProductRequest product);
+    @RequestMapping("/products")
+    List<ProductResponse> getAll();
     @RequestMapping("/products/{id}")
     void deleteById(Long id);
     @RequestMapping("/products/{id}")

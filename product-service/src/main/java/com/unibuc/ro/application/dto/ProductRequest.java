@@ -13,4 +13,6 @@ public class ProductRequest {
 
     private String description;
 
+    private String name;
+
 }

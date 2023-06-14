@@ -4,13 +4,10 @@ import com.unibuc.clientservice.domain.dto.ClientDto;
 import com.unibuc.clientservice.domain.model.Client;
 import com.unibuc.clientservice.service.ClientService;
 import com.unibuc.clientservice.utils.ClientMapper;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.unibuc.ro.application.service.FeignProductService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,24 +19,28 @@ import org.springframework.hateoas.Link;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("/clients")
 @Validated
 @Slf4j
 public class ClientController {
     private final ClientService clientService;
+    private final FeignProductService feignProductService;
     private ClientMapper clientMapper = new ClientMapper();
 
-    @Autowired
-    public ClientController(ClientService clientService) {
+    public ClientController(ClientService clientService, FeignProductService feignProductService) {
         this.clientService = clientService;
+        this.feignProductService = feignProductService;
     }
 
     @Operation(method = "GET", summary = "Get all clients")
     @GetMapping
     public ResponseEntity<List<ClientDto>> getAll() {
         List<Client> clientList = clientService.getAllClients();
-        for(Client client :clientList){
+        for (Client client : clientList) {
             Link selfLink = linkTo(methodOn(ClientController.class).getByEmail(client.getEmail())).withSelfRel();
             client.add(selfLink);
             Link deleteLink = linkTo(methodOn(ClientController.class).deleteClientByEmail(client.getEmail())).withRel("deleteClientByEmail");

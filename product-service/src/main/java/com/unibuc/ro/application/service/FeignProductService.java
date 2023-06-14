@@ -3,6 +3,7 @@ package com.unibuc.ro.application.service;
 import com.unibuc.ro.application.dto.ProductRequest;
 import com.unibuc.ro.application.dto.ProductResponse;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 

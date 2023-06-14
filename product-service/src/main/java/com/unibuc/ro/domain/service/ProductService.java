@@ -5,8 +5,6 @@ import com.unibuc.ro.domain.model.Product;
 import com.unibuc.ro.application.dto.ProductRequest;
 
 
-import java.util.Optional;
-
 
 public interface ProductService {
 

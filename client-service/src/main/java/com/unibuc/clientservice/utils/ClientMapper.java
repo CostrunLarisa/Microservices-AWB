@@ -1,7 +1,7 @@
-package com.unibuc.ro.utils;
+package com.unibuc.clientservice.utils;
 
-import com.unibuc.ro.domain.dto.ClientDto;
-import com.unibuc.ro.domain.model.Client;
+import com.unibuc.clientservice.domain.dto.ClientDto;
+import com.unibuc.clientservice.domain.model.Client;
 
 public class ClientMapper {
     public ClientDto entityToDto(Client entity) {

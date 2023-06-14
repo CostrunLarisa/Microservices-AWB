@@ -1,10 +1,9 @@
-package com.unibuc.ro.controller;
+package com.unibuc.clientservice.controller;
 
-import com.unibuc.ro.domain.dto.ClientDto;
-import com.unibuc.ro.domain.model.Client;
-import com.unibuc.ro.service.ClientService;
-import com.unibuc.ro.utils.ClientMapper;
-import com.unibuc.ro.service.ProductProxy;
+import com.unibuc.clientservice.domain.dto.ClientDto;
+import com.unibuc.clientservice.domain.model.Client;
+import com.unibuc.clientservice.service.ClientService;
+import com.unibuc.clientservice.utils.ClientMapper;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +27,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Slf4j
 public class ClientController {
     private final ClientService clientService;
-    private final ProductProxy productProxy;
     private ClientMapper clientMapper = new ClientMapper();
 
-    public ClientController(ClientService clientService, ProductProxy productProxy) {
+    public ClientController(ClientService clientService) {
         this.clientService = clientService;
-        this.productProxy = productProxy;
     }
 
     @Operation(method = "GET", summary = "Get all clients")

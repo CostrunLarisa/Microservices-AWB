@@ -1,4 +1,4 @@
-package com.unibuc.ro.domain.dto;
+package com.unibuc.clientservice.domain.dto;
 
 import lombok.Data;
 import org.springframework.hateoas.RepresentationModel;

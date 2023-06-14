@@ -1,4 +1,4 @@
-package com.unibuc.ro.utils;
+package com.unibuc.clientservice.utils;
 
 public class Constants {
     public static final String CLIENT_ALREADY_EXISTS = "Client with email = %s and phone number = %s already exists";

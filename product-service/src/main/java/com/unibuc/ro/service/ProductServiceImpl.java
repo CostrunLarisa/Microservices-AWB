@@ -35,9 +35,11 @@ public class ProductServiceImpl implements ProductService {
             findByName(productRequest.getName());
             throw new EntityAlreadyExistsException("Product");
         } catch (EntityNotFoundException e) {
-            Product product = productMapper.toProduct(productRequest);
+            Product product = new Product(productRequest.getPrice()
+                    ,productRequest.getName(), productRequest.getType(),
+                    productRequest.getProducer(), productRequest.getDate());
             productRepository.save(product);
-            return productMapper.toProductResponse(product);
+            return productMapper.toProductResponse(productRequest);
         }
     }
 

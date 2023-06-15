@@ -22,7 +22,11 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client addNewClient(Client client) {
-        checkIfClientExists(client);
+        if (checkIfClientAlreadyExists(client)) {
+            throw new ClientAlreadyExistsException(String.format(Constants.CLIENT_ALREADY_EXISTS,
+                    client.getEmail(), client.getPhoneNumber()));
+
+        }
         return clientRepository.save(client);
     }
 
@@ -46,19 +50,19 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client updatePhoneNumber(String clientEmail, String newPhoneNumber) {
         Client existingClient = getByEmail(clientEmail);
-        checkIfPhoneNumberExists(newPhoneNumber);
+        if (checkIfPhoneNumberExists(newPhoneNumber)) {
+            throw new ClientAlreadyExistsException(String.format(Constants.PHONENUMBER_ALREADY_EXISTS, newPhoneNumber));
+        }
+
         existingClient.setPhoneNumber(newPhoneNumber);
         return clientRepository.save(existingClient);
     }
 
     private boolean checkIfPhoneNumberExists(String phoneNumber) {
-        return clientRepository.existsByPhoneNumber(phoneNumber)
-                .orElseThrow(() -> new ClientAlreadyExistsException(String.format(Constants.PHONENUMBER_ALREADY_EXISTS, phoneNumber)));
+        return clientRepository.existsByPhoneNumber(phoneNumber).get();
     }
 
-    private boolean checkIfClientExists(Client client) {
-        return clientRepository.existsByEmailOrPhoneNumber(client.getEmail(), client.getPhoneNumber())
-                .orElseThrow(() -> new ClientAlreadyExistsException(String.format(Constants.CLIENT_ALREADY_EXISTS,
-                        client.getEmail(), client.getPhoneNumber())));
+    private boolean checkIfClientAlreadyExists(Client client) {
+        return clientRepository.existsByEmailOrPhoneNumber(client.getEmail(), client.getPhoneNumber()).get();
     }
 }

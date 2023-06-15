@@ -4,14 +4,12 @@ import com.unibuc.clientservice.domain.dto.ClientDto;
 import com.unibuc.clientservice.domain.model.Client;
 import com.unibuc.clientservice.service.ClientService;
 import com.unibuc.clientservice.utils.ClientMapper;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
@@ -40,13 +38,8 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @Operation(method = "GET", summary = "Get all clients")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Clients found",
-                    content = {@Content(mediaType = "application/hal+json",
-                            array = @ArraySchema(schema = @Schema(implementation = ClientDto.class)))
-                    }
-            )})
+    @Operation(method = "GET", summary = "Get all existing clients - list sorted by name")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Clients found")})
     @GetMapping
     public ResponseEntity<CollectionModel<ClientDto>> getAll() {
         Link getSelfLink = linkTo(methodOn(ClientController.class).getAll()).withSelfRel();
@@ -57,8 +50,6 @@ public class ClientController {
                     ClientDto dto = clientMapper.entityToDto(client);
                     Link selfLink = linkTo(methodOn(ClientController.class).getByEmail(client.getEmail())).withSelfRel();
                     dto.add(selfLink);
-                    Link deleteLink = linkTo(methodOn(ClientController.class).deleteClientByEmail(client.getEmail())).withRel("deleteClientByEmail");
-                    dto.add(deleteLink);
                     return dto;
                 }).collect(Collectors.toList());
 
@@ -101,13 +92,13 @@ public class ClientController {
                             schema = @Schema(implementation = ClientDto.class))
                     }
             ),
-            @ApiResponse(responseCode = "409",
+            @ApiResponse(responseCode = "400",
                     description = "Client with given email already exists",
                     content = @Content
             )
     })
     @PostMapping
-    public ResponseEntity<ClientDto> addClient(@RequestBody @Valid ClientDto newClient) {
+    public ResponseEntity<ClientDto> addClient(@Valid @RequestBody ClientDto newClient) {
         Client clientEntity = clientMapper.dtoToEntity(newClient);
         clientService.addNewClient(clientEntity);
 
@@ -129,13 +120,13 @@ public class ClientController {
             @ApiResponse(responseCode = "404",
                     description = "Client with given email not found",
                     content = @Content),
-            @ApiResponse(responseCode = "404",
+            @ApiResponse(responseCode = "400",
                     description = "Client with given phone number already exists",
                     content = @Content)
     })
     @PutMapping("/{email}")
     public ResponseEntity<ClientDto> updateClientPhoneNumber(@PathVariable("email") String email,
-                                                             @RequestParam @Valid String phoneNumber) {
+                                                             @RequestParam() String phoneNumber) {
         Client client = clientService.updatePhoneNumber(email, phoneNumber);
         ClientDto dto = clientMapper.entityToDto(client);
         Link getByEmailLink = linkTo(methodOn(ClientController.class).getByEmail(email))

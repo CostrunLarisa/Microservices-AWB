@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
         responseParameters.put("Reason", exception.getMessage());
         responseParameters.put("DateTime", LocalDateTime.now().toString());
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(responseParameters);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseParameters);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

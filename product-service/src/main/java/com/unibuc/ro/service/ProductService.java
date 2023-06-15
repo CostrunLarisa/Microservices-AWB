@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface ProductService {
 
-    Product findById(Long id);
-
     ProductResponse save(ProductRequest productRequest);
 
-    void deleteById(Long id);
+    void deleteByName(String name);
 
     ProductResponse updateById(Long id, ProductRequest productRequest);
 
     List<ProductResponse> findAll();
+
+    ProductResponse getByName(String name);
 }

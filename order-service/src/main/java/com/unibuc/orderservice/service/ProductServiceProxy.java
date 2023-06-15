@@ -1,24 +1,20 @@
 package com.unibuc.orderservice.service;
 
-import com.unibuc.orderservice.ProductRequest;
-import com.unibuc.orderservice.ProductResponse;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @FeignClient("product-service")
 public interface ProductServiceProxy {
-    @RequestMapping(method = RequestMethod.POST, value = "/products")
-    ProductResponse save(ProductRequest product);
+    @GetMapping("/products")
+    ResponseEntity<List<ProductResponse>> getAll();
 
-    @RequestMapping(method = RequestMethod.GET, value = "/products")
-    List<ProductResponse> getAll();
+    @DeleteMapping("/products/{id}")
+    ResponseEntity<String> deleteProduct(@PathVariable("id") Long id);
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/products/{id}")
-    void deleteById(Long id);
+    @PostMapping("/products")
+    ResponseEntity<ProductResponse> addProduct(@RequestBody ProductRequest product);
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/products/{id}")
-    ProductResponse updateById(Long id, ProductRequest productRequest);
 }

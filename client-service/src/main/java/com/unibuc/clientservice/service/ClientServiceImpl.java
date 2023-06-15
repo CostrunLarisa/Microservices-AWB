@@ -20,25 +20,30 @@ public class ClientServiceImpl implements ClientService {
         this.clientRepository = clientRepository;
     }
 
+    @Override
     public Client addNewClient(Client client) {
         checkIfClientExists(client);
         return clientRepository.save(client);
     }
 
+    @Override
     public List<Client> getAllClients() {
         return clientRepository.findAll(Sort.by("email").ascending());
     }
 
+    @Override
     public Client getByEmail(String email) {
         return clientRepository.findByEmail(email)
                 .orElseThrow(() -> new ClientNotFoundException(String.format(Constants.CLIENT_NOT_FOUND, email)));
     }
 
+    @Override
     public void deleteClientByEmail(String email) {
         getByEmail(email);
         clientRepository.deleteByEmail(email);
     }
 
+    @Override
     public Client updatePhoneNumber(String clientEmail, String newPhoneNumber) {
         Client existingClient = getByEmail(clientEmail);
         checkIfPhoneNumberExists(newPhoneNumber);

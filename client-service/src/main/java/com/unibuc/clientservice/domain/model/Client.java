@@ -8,8 +8,6 @@ import org.springframework.hateoas.RepresentationModel;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "clients")
@@ -43,7 +41,4 @@ public class Client extends RepresentationModel<Client> {
     @NotEmpty(message = "Phone number cannot be empty")
     @Pattern(regexp = "^\\d{10}$")
     private String phoneNumber;
-
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Order> orderList = new ArrayList<>();
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient("product-service")
+@FeignClient("productservice")
 public interface ProductServiceProxy {
     @GetMapping("/products")
     ResponseEntity<List<ProductResponse>> getAll();

@@ -25,30 +25,33 @@ public class ProductServiceImpl implements ProductService {
         this.productMapper = productMapper;
     }
 
-    public Product findById(Long id) {
-        Optional<Product> productFound = productRepository.findById(id);
-        return productFound.orElseThrow(() -> new EntityNotFoundException("Product"));
+    private Product findById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product"));
     }
 
     public ProductResponse save(ProductRequest productRequest) {
-        try {
-            findByName(productRequest.getName());
+        if (productWithNameAlreadyExists(productRequest.getName())) {
             throw new EntityAlreadyExistsException("Product");
-        } catch (EntityNotFoundException e) {
-            Product product = productMapper.toProduct(productRequest);
-            productRepository.save(product);
-            return productMapper.toProductResponse(product);
         }
+
+        Product product = productMapper.toProduct(productRequest);
+        productRepository.save(product);
+        return productMapper.toProductResponse(product);
     }
 
     public Product findByName(String name) {
-        Optional<Product> productFound = productRepository.findProductByName(name);
-        return productFound.orElseThrow(() -> new EntityNotFoundException("Product"));
+        return productRepository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("Product"));
     }
 
-    public void deleteById(Long id) {
-        findById(id);
-        productRepository.deleteById(id);
+    private boolean productWithNameAlreadyExists(String name) {
+        return productRepository.findByName(name).isPresent();
+    }
+
+    public void deleteByName(String name) {
+        findByName(name);
+        productRepository.deleteByName(name);
     }
 
     public ProductResponse updateById(Long id, ProductRequest productRequest) {
@@ -60,6 +63,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponse> findAll() {
         List<Product> products = productRepository.findAll();
-        return products.stream().map(product -> productMapper.toProductResponse(product)).collect(Collectors.toList());
+        return products.stream()
+                .map(product -> productMapper.toProductResponse(product))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductResponse getByName(String name) {
+
+        return productMapper.toProductResponse(findByName(name));
     }
 }

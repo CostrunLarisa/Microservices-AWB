@@ -63,6 +63,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     private boolean checkIfClientAlreadyExists(Client client) {
-        return clientRepository.existsByEmailOrPhoneNumber(client.getEmail(), client.getPhoneNumber()).get();
+        return clientRepository.findByEmailOrPhoneNumber(client.getEmail(), client.getPhoneNumber())
+                .isPresent();
     }
 }

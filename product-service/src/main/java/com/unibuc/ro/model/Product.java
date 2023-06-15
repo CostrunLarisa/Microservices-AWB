@@ -1,7 +1,6 @@
 package com.unibuc.ro.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -14,9 +13,13 @@ import java.time.LocalDate;
 @Builder
 public class Product extends RepresentationModel<Product> {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NonNull
+    @Column(name = "name", unique = true)
     private String name;
+
     @NonNull
     private Long price;
 

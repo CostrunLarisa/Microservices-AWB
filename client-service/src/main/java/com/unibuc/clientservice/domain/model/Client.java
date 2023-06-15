@@ -7,18 +7,22 @@ import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "clients")
-@Getter@Setter
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @EqualsAndHashCode
 public class Client extends RepresentationModel<Client> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @NotBlank(message = "Email cannot be null")
     @NotEmpty(message = "Email cannot be empty")

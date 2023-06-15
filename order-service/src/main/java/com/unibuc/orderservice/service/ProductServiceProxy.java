@@ -17,4 +17,6 @@ public interface ProductServiceProxy {
     @PostMapping("/products")
     ResponseEntity<ProductResponse> addProduct(@RequestBody ProductRequest product);
 
+    @GetMapping("/products")
+    ResponseEntity<ProductResponse> getByName(@RequestParam String name);
 }

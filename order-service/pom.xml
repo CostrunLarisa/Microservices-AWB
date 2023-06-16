@@ -156,7 +156,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"> <!-- Replace this with the main class of your job -->
-                                    <mainClass>OrderServiceApp</mainClass>
+                                    <mainClass>com.unibuc.orderservice.OrderServiceApp</mainClass>
                                 </transformer>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>

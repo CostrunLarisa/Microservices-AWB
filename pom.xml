@@ -19,7 +19,7 @@
         <module>order-service</module>
         <module>eureka-server</module>
         <module>client-service</module>
-        <module>config-server</module>
+        <module>config</module>
     </modules>
 
     <properties>

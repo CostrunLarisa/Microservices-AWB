@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.unibuc</groupId>
-    <artifactId>orderservice</artifactId>
+    <artifactId>order-service</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

@@ -10,7 +10,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +35,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class ClientController {
     private final ClientService clientService;
     private ClientMapper clientMapper = new ClientMapper();
+    @Value("${msg:Config Server is not working. Please check...}")
+    private String msg;
 
+    private Logger LOGGER = LoggerFactory.getLogger(ClientController.class);
     @Autowired
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
@@ -43,7 +49,7 @@ public class ClientController {
     @GetMapping
     public ResponseEntity<CollectionModel<ClientDto>> getAll() {
         Link getSelfLink = linkTo(methodOn(ClientController.class).getAll()).withSelfRel();
-
+        LOGGER.info(msg);
         List<ClientDto> clientDtoList = clientService.getAllClients()
                 .stream()
                 .map(client -> {
@@ -52,7 +58,6 @@ public class ClientController {
                     dto.add(selfLink);
                     return dto;
                 }).collect(Collectors.toList());
-
         CollectionModel<ClientDto> response = CollectionModel.of(clientDtoList, getSelfLink);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

@@ -25,7 +25,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order addNewOrder(Order orderRequest) {
         Order order = new Order(orderRequest.getClientId(),
-                 orderRequest.getOrderDate(), orderRequest.getOrderProductList());
+                orderRequest.getProductId(),orderRequest.getOrderDate(), orderRequest.getQuantity(),
+                orderRequest.getTotalPrice());
         orderRepository.save(order);
         return order;
     }
@@ -46,6 +47,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getByClientId(Long clientId) {
         return orderRepository.findByClientId(clientId).stream().toList();
+    }
+
+    @Override
+    public List<Order> getByProductId(Long productId) {
+        return orderRepository.findByClientId(productId).stream().toList();
     }
 
     @Override

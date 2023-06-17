@@ -1,6 +1,6 @@
 package com.unibuc.orderservice.model;
 
-import com.unibuc.orderservice.service.Client;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,25 +26,30 @@ public class Order extends RepresentationModel<Order> {
     private Long clientId;
 
     @NonNull
+    private Long productId;
+    @NonNull
     private LocalDate orderDate;
 
-    @OneToMany(mappedBy="order")
-    private ArrayList<OrderProduct> orderProductList;
+    @NonNull
+    private int quantity;
+
+    @NonNull
+    private float totalPrice;
 
     public Order() {
 
     }
 
+    public Order(@NonNull Long clientId, @NonNull Long productId, @NonNull LocalDate orderDate, @NonNull int quantity, @NonNull float totalPrice) {
+        this.clientId = clientId;
+        this.productId = productId;
+        this.orderDate = orderDate;
+        this.quantity = quantity;
+        this.totalPrice = totalPrice;
+    }
+
     public Long getOrderId() {
         return orderId;
-    }
-
-    public LocalDate getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDate orderDate) {
-        this.orderDate = orderDate;
     }
 
     public void setOrderId(Long orderId) {
@@ -59,26 +64,35 @@ public class Order extends RepresentationModel<Order> {
         this.clientId = clientId;
     }
 
-    public ArrayList<OrderProduct> getOrderProductList() {
-        return orderProductList;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setOrderProductList(ArrayList<OrderProduct> orderProductList) {
-        this.orderProductList = orderProductList;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderId=" + orderId +
-                ", clientId=" + clientId +
-                ", orderProductList=" + orderProductList +
-                '}';
+    public LocalDate getOrderDate() {
+        return orderDate;
     }
 
-    public Order(@NonNull Long clientId, @NonNull LocalDate orderDate, ArrayList<OrderProduct> orderProductList) {
-        this.clientId = clientId;
+    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
-        this.orderProductList = orderProductList;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

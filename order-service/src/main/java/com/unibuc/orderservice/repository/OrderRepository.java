@@ -11,11 +11,11 @@ import java.util.Optional;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    Optional<Order> findByOrderDateAndClientId(LocalDate orderdate, Long clientId);
+    Optional<Order> findByOrderDateAndClientId(LocalDate orderDate, Long clientId);
 
     Optional<Order> findByClientId(Long clientId);
 
-    void deleteByClientId(Long clientId);
+    void deleteByClientIdaAndProductId(Long clientId);
 
     void deleteByOrderId(Long orderId);
 

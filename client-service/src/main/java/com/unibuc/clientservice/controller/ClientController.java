@@ -1,6 +1,6 @@
 package com.unibuc.clientservice.controller;
 
-import com.unibuc.clientservice.domain.dto.ClientDto;
+import com.unibuc.clientservice.domain.model.dto.ClientDto;
 import com.unibuc.clientservice.domain.model.Client;
 import com.unibuc.clientservice.service.ClientService;
 import com.unibuc.clientservice.utils.ClientMapper;
@@ -30,6 +30,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/clients")
 @Validated
 public class ClientController {
+
     private final ClientService clientService;
     private ClientMapper clientMapper = new ClientMapper();
 

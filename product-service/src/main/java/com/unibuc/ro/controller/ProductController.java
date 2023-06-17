@@ -1,8 +1,8 @@
 package com.unibuc.ro.controller;
 
+import com.unibuc.ro.service.ProductService;
 import com.unibuc.ro.dto.ProductResponse;
 import com.unibuc.ro.dto.ProductRequest;
-import com.unibuc.ro.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

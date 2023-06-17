@@ -49,9 +49,3 @@ services:
     container_name: zipkinserver
     ports:
       - "9411:9411"
-
-  confserver:
-    image: config-server
-    container_name: confserver
-    ports:
-      - '8070:8070'

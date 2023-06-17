@@ -24,12 +24,12 @@ spec:
             - name: SPRING_CONFIG_IMPORT
               valueFrom:
                 configMapKeyRef:
-                  name: config.yml
+                  name: config
                   key: SPRING_CONFIG_IMPORT
             - name: eureka.client.service-url.defaultZone
               valueFrom:
                 configMapKeyRef:
-                  name: config.yml
+                  name: config
                   key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
 
 ---

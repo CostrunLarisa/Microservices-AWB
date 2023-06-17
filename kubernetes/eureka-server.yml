@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: eureka
-          image: gcr.io/smart-ratio-389920/github.com/costrunlarisa/microservices-awb:d038ac1
+          image: costrunlarisa/eureka-server:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8071

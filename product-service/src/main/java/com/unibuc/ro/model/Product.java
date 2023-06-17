@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Entity
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class Product extends RepresentationModel<Product> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

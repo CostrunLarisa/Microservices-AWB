@@ -114,6 +114,9 @@ public class ProductController {
 
     @GetMapping("/{name}")
     public ResponseEntity<ProductResponse> getByName(@PathVariable String name) {
+        ProductResponse dto = productService.getByName(name);
+        Link selfLink = linkTo(methodOn(ProductController.class).getByName(name)).withSelfRel();
+        dto.add(selfLink);
         return new ResponseEntity<ProductResponse>(productService.getByName(name), HttpStatus.OK);
     }
 }

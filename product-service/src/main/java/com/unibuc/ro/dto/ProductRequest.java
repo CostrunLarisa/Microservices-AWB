@@ -1,12 +1,13 @@
 package com.unibuc.ro.dto;
 
 import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductRequest {
+public class ProductRequest extends RepresentationModel<ProductRequest> {
 
     private Long price;
 

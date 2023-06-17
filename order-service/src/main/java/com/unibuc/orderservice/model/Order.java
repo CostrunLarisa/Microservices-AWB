@@ -1,11 +1,13 @@
 package com.unibuc.orderservice.model;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NonNull;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;

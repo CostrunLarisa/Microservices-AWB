@@ -1,6 +1,7 @@
 package com.unibuc.orderservice.service;
 
 import com.unibuc.clientservice.repository.ClientRepository;
+import com.unibuc.orderservice.exceptions.OrderNotFoundException;
 import com.unibuc.orderservice.model.Order;
 import com.unibuc.orderservice.repository.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -57,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order findById(Long id) {
         return orderRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Order"));
+                .orElseThrow(() -> new OrderNotFoundException("Order"));
 
     }
 

@@ -1,9 +1,5 @@
 package com.unibuc.orderservice.model;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

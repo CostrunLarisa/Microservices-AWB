@@ -21,10 +21,10 @@ public class Order extends RepresentationModel<Order> {
     private Long orderId;
 
     @NonNull
-    private Long clientId;
+    private String clientEmail;
 
     @NonNull
-    private Long productId;
+    private String productName;
     @NonNull
     private LocalDate orderDate;
 
@@ -38,9 +38,9 @@ public class Order extends RepresentationModel<Order> {
 
     }
 
-    public Order(@NonNull Long clientId, @NonNull Long productId, @NonNull LocalDate orderDate, @NonNull int quantity, @NonNull float totalPrice) {
-        this.clientId = clientId;
-        this.productId = productId;
+    public Order(@NonNull String clientEmail, @NonNull String productName, @NonNull LocalDate orderDate, @NonNull int quantity, @NonNull float totalPrice) {
+        this.clientEmail = clientEmail;
+        this.productName = productName;
         this.orderDate = orderDate;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
@@ -54,20 +54,20 @@ public class Order extends RepresentationModel<Order> {
         this.orderId = orderId;
     }
 
-    public Long getClientId() {
-        return clientId;
+    public String getClientEmail() {
+        return clientEmail;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
+    public void setClientEmail(String clientEmail) {
+        this.clientEmail = clientEmail;
     }
 
-    public Long getProductId() {
-        return productId;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public LocalDate getOrderDate() {

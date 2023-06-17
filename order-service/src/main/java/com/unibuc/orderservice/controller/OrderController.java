@@ -8,6 +8,7 @@ import com.unibuc.clientservice.service.ClientService;
 import com.unibuc.orderservice.model.Order;
 import com.unibuc.orderservice.service.ClientServiceProxy;
 import com.unibuc.orderservice.service.OrderService;
+import com.unibuc.orderservice.service.ProductResponse;
 import com.unibuc.orderservice.service.ProductServiceProxy;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -72,15 +73,28 @@ public class OrderController {
     })
     @PostMapping
     public ResponseEntity<Order> addOrder(@Valid @RequestBody Order newOrder) {
+
+        ClientDto clientDto = clientServiceProxy.getByEmail(newOrder.getClientEmail()).getBody();
+        ProductResponse productResponse=productServiceProxy.getByName(newOrder.getProductName()).getBody();
+        
         orderService.addNewOrder(newOrder);
 
-        Link getByClientIdLink = linkTo(methodOn(OrderController.class).orderService.getByClientId(newOrder.getClientId()))
-                .withRel("getByClientId");
-        newOrder.add(getByClientIdLink);
+        Link getAllOrdersLink = linkTo(methodOn(OrderController.class).orderService.getAllOrders())
+                .withRel("getAllOrders");
+        newOrder.add(getAllOrdersLink);
+
+        Link getByClientEmailLink = linkTo(methodOn(OrderController.class).orderService.getByClientEmail(newOrder.getClientEmail()))
+                .withRel("getByClientEmail");
+        newOrder.add(getByClientEmailLink);
+
+        Link getByProductNameLink = linkTo(methodOn(OrderController.class).orderService.getByProductName(newOrder.getProductName()))
+                .withRel("getByProductName");
+        newOrder.add(getByProductNameLink);
+
         return new ResponseEntity<>(newOrder, HttpStatus.CREATED);
     }
 
-    @Operation(method = "GET", summary = "Get order by ClientId")
+    @Operation(method = "GET", summary = "Get orders by ClientEmail")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Orders with given client found",
                     content = {
@@ -89,12 +103,56 @@ public class OrderController {
                     }
             ),
             @ApiResponse(responseCode = "404", description = "Oreders for client not found", content = @Content)})
-    @GetMapping("/{clientId}")
-    public ResponseEntity<List<Order>> getByClientId(@PathVariable("clientId") Long clientId) {
-        List<Order> orders = orderService.getByClientId(clientId);
+    @GetMapping("/{clientEmail}")
+    public ResponseEntity<List<Order>> getByClientId(@PathVariable("clientEmail") String clientEmail) {
+        List<Order> orders = orderService.getByClientEmail(clientEmail);
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
+
+    @Operation(method = "GET", summary = "Get orders by ProductName")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Orders with given product found",
+                    content = {
+                            @Content(mediaType = "application/hal+json",
+                                    schema = @Schema(implementation = Order.class))
+                    }
+            ),
+            @ApiResponse(responseCode = "404", description = "Oreders with given product not found", content = @Content)})
+    @GetMapping("/{productName}")
+    public ResponseEntity<List<Order>> getByProductId(@PathVariable("productName") String productName) {
+        List<Order> orders = orderService.getByProductName(productName);
+
+        return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+
+
+
+    @Operation(method = "PUT", summary = "Update info for an order identified by its id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Order info updated",
+                    content = {@Content(
+                            mediaType = "application/hal+json",
+                            schema = @Schema(implementation = Order.class))
+                    }
+            ),
+            @ApiResponse(responseCode = "404",
+                    description = "Order with given id not found",
+                    content = @Content)
+    })
+    @PutMapping("/{id}")
+    public ResponseEntity<Order> updateProduct(@PathVariable("id") Long id, @RequestBody Order orderRequest) {
+        Order orderUpdated = orderService.updateById(id, orderRequest);
+        Link getByClientEmail = linkTo(methodOn(OrderController.class).orderService.getByClientEmail(orderUpdated.getClientEmail()))
+                .withRel("getByClientEmail");
+        orderUpdated.add(getByClientEmail);
+
+        Link getByProductName = linkTo(methodOn(OrderController.class).orderService.getByProductName(orderUpdated.getProductName()))
+                .withRel("getByProductName");
+        orderUpdated.add(getByProductName);
+
+        return new ResponseEntity<>(orderUpdated, HttpStatus.OK);
+    }
 
 
 

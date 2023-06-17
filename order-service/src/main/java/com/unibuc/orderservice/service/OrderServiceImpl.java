@@ -1,12 +1,9 @@
 package com.unibuc.orderservice.service;
 
-import com.unibuc.clientservice.repository.ClientRepository;
 import com.unibuc.orderservice.exceptions.OrderNotFoundException;
 import com.unibuc.orderservice.model.Order;
 import com.unibuc.orderservice.repository.OrderRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,8 +22,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order addNewOrder(Order orderRequest) {
-        Order order = new Order(orderRequest.getClientId(),
-                orderRequest.getProductId(),orderRequest.getOrderDate(), orderRequest.getQuantity(),
+        Order order = new Order(orderRequest.getClientEmail(),
+                orderRequest.getProductName(),orderRequest.getOrderDate(), orderRequest.getQuantity(),
                 orderRequest.getTotalPrice());
         orderRepository.save(order);
         return order;
@@ -45,14 +42,16 @@ public class OrderServiceImpl implements OrderService {
         return orders.stream().collect(Collectors.toList());
     }
 
-    @Override
-    public List<Order> getByClientId(Long clientId) {
-        return orderRepository.findByClientId(clientId).stream().toList();
-    }
 
     @Override
-    public List<Order> getByProductId(Long productId) {
-        return orderRepository.findByClientId(productId).stream().toList();
+    public List<Order> getByClientEmail(String clientEmail) {
+        return orderRepository.findByClientEmail(clientEmail).stream().toList();
+    }
+
+
+    @Override
+    public List<Order> getByProductName(String productName) {
+        return orderRepository.findByProductName(productName).stream().toList();
     }
 
     @Override

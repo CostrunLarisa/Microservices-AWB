@@ -13,9 +13,10 @@ public interface OrderService {
 
     List<Order> findAll();
 
-    List<Order> getByClientId(Long clientId);
+    List<Order> getByClientEmail(String clientEmail);
 
-    List<Order> getByProductId(Long productId);
+    List<Order> getByProductName(String productName);
+
 
 
     Order findById (Long id);

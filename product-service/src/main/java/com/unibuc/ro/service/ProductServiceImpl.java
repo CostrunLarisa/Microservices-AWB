@@ -1,17 +1,16 @@
 package com.unibuc.ro.service;
 
-import com.unibuc.ro.dto.ProductRequest;
-import com.unibuc.ro.dto.ProductResponse;
-import com.unibuc.ro.mapper.ProductMapper;
 import com.unibuc.ro.exceptions.EntityAlreadyExistsException;
-import com.unibuc.ro.exceptions.EntityNotFoundException;
+import com.unibuc.ro.mapper.ProductMapper;
 import com.unibuc.ro.model.Product;
 import com.unibuc.ro.repository.ProductRepository;
+import com.unibuc.ro.dto.ProductRequest;
+import com.unibuc.ro.dto.ProductResponse;
+import com.unibuc.ro.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

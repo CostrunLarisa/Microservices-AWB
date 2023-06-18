@@ -5,7 +5,10 @@ import com.unibuc.clientservice.controller.ClientController;
 import com.unibuc.clientservice.domain.model.Client;
 import com.unibuc.clientservice.domain.model.dto.ClientDto;
 import com.unibuc.clientservice.service.ClientService;
+import com.unibuc.clientservice.utils.ClientMapper;
+import com.unibuc.orderservice.mapper.OrderMapper;
 import com.unibuc.orderservice.model.Order;
+import com.unibuc.orderservice.model.OrderDto;
 import com.unibuc.orderservice.service.ClientServiceProxy;
 import com.unibuc.orderservice.service.OrderService;
 import com.unibuc.orderservice.service.ProductResponse;
@@ -39,6 +42,8 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    private OrderMapper orderMapper = new OrderMapper();
+
 
     @Autowired
     public OrderController(ClientServiceProxy clientServiceProxy, ProductServiceProxy productServiceProxy, OrderService orderService) {
@@ -50,14 +55,18 @@ public class OrderController {
     @Operation(method = "GET", summary = "Get all existing orders")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Orders found")})
     @GetMapping
-    public ResponseEntity<CollectionModel<Order>> getAll() {
+    public ResponseEntity<CollectionModel<OrderDto>> getAll() {
         Link getSelfLink = linkTo(methodOn(OrderController.class).getAll()).withSelfRel();
 
-        List<Order> ordersList = orderService.getAllOrders()
+        List<OrderDto> orderDtoList = orderService.getAllOrders()
                 .stream()
-                .collect(Collectors.toList());
-
-        CollectionModel<Order> response = CollectionModel.of(ordersList, getSelfLink);
+                .map(order -> {
+                    OrderDto dto = orderMapper.entityToDto(order);
+                    Link selfLink = linkTo(methodOn(OrderController.class).orderService.getByClientEmail(order.getClientEmail())).withSelfRel();
+                    dto.add(selfLink);
+                    return dto;
+                }).collect(Collectors.toList());
+        CollectionModel<OrderDto> response = CollectionModel.of(orderDtoList, getSelfLink);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -72,12 +81,14 @@ public class OrderController {
             )
     })
     @PostMapping
-    public ResponseEntity<Order> addOrder(@Valid @RequestBody Order newOrder) {
+    public ResponseEntity<Order> addOrder(@Valid @RequestBody OrderDto newOrder) {
 
-        ClientDto clientDto = clientServiceProxy.getByEmail(newOrder.getClientEmail()).getBody();
-        ProductResponse productResponse=productServiceProxy.getByName(newOrder.getProductName()).getBody();
-        
-        orderService.addNewOrder(newOrder);
+        Order order= orderMapper.dtoToEntity(newOrder);
+
+        float price = productServiceProxy.getByName(order.getProductName()).getBody().getPrice();
+        price= price * order.getQuantity();
+        order.setTotalPrice(price);
+        orderService.addNewOrder(order);
 
         Link getAllOrdersLink = linkTo(methodOn(OrderController.class).orderService.getAllOrders())
                 .withRel("getAllOrders");
@@ -91,8 +102,10 @@ public class OrderController {
                 .withRel("getByProductName");
         newOrder.add(getByProductNameLink);
 
-        return new ResponseEntity<>(newOrder, HttpStatus.CREATED);
+        return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
+
+
 
     @Operation(method = "GET", summary = "Get orders by ClientEmail")
     @ApiResponses(value = {
@@ -104,9 +117,14 @@ public class OrderController {
             ),
             @ApiResponse(responseCode = "404", description = "Oreders for client not found", content = @Content)})
     @GetMapping("/{clientEmail}")
-    public ResponseEntity<List<Order>> getByClientId(@PathVariable("clientEmail") String clientEmail) {
-        List<Order> orders = orderService.getByClientEmail(clientEmail);
-        return new ResponseEntity<>(orders, HttpStatus.OK);
+    public ResponseEntity<List<OrderDto>> getByClientEmail(@PathVariable("clientEmail") String clientEmail) {
+        List<OrderDto> dtos = orderService.getByClientEmail(clientEmail).stream().map(order -> {
+            OrderDto dto = orderMapper.entityToDto(order);
+            Link selfLink = linkTo(methodOn(OrderController.class).orderService.getByClientEmail(order.getClientEmail())).withSelfRel();
+            dto.add(selfLink);
+            return dto;
+        }).collect(Collectors.toList());
+         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
 
@@ -120,10 +138,15 @@ public class OrderController {
             ),
             @ApiResponse(responseCode = "404", description = "Oreders with given product not found", content = @Content)})
     @GetMapping("/{productName}")
-    public ResponseEntity<List<Order>> getByProductId(@PathVariable("productName") String productName) {
-        List<Order> orders = orderService.getByProductName(productName);
+    public ResponseEntity<List<OrderDto>> getByProductName(@PathVariable("productName") String productName) {
+        List<OrderDto> dtos = orderService.getByProductName(productName).stream().map(order -> {
+            OrderDto dto = orderMapper.entityToDto(order);
+            Link selfLink = linkTo(methodOn(OrderController.class).orderService.getByProductName(order.getProductName())).withSelfRel();
+            dto.add(selfLink);
+            return dto;
+        }).collect(Collectors.toList());
 
-        return new ResponseEntity<>(orders, HttpStatus.OK);
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
 

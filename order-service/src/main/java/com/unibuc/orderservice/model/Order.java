@@ -20,6 +20,7 @@ public class Order extends RepresentationModel<Order> {
     @Column(name="order_id")
     private Long orderId;
 
+
     @NonNull
     private String clientEmail;
 
@@ -45,6 +46,7 @@ public class Order extends RepresentationModel<Order> {
         this.quantity = quantity;
         this.totalPrice = totalPrice;
     }
+
 
     public Long getOrderId() {
         return orderId;

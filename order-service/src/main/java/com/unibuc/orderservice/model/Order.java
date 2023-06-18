@@ -20,7 +20,6 @@ public class Order extends RepresentationModel<Order> {
     @Column(name="order_id")
     private Long orderId;
 
-
     @NonNull
     private String clientEmail;
 

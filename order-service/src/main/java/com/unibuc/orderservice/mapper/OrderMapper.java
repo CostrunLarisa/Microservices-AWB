@@ -20,6 +20,7 @@ public class OrderMapper {
         entity.setClientEmail(dto.getClientEmail());
         entity.setProductName(dto.getProductName());
         entity.setQuantity(dto.getQuantity());
+        entity.setOrderDate(java.time.LocalDate.now());
         return entity;
     }
 

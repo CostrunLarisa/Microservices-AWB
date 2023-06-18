@@ -2,6 +2,7 @@ package com.unibuc.orderservice.service;
 
 import com.unibuc.orderservice.exceptions.OrderNotFoundException;
 import com.unibuc.orderservice.model.Order;
+import com.unibuc.orderservice.model.OrderDto;
 import com.unibuc.orderservice.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,13 +44,13 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public List<Order> getByClientEmail(String clientEmail) {
+    public List<Order> getOrderByClientEmail(String clientEmail) {
         return orderRepository.findByClientEmail(clientEmail).stream().toList();
     }
 
 
     @Override
-    public List<Order> getByProductName(String productName) {
+    public List<Order> getOrderByProductName(String productName) {
         return orderRepository.findByProductName(productName).stream().toList();
     }
 

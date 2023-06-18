@@ -6,8 +6,8 @@ data:
   SPRING_PROFILES_ACTIVE: dev
   SPRING_CONFIG_IMPORT: optional:configserver:http://configserver-service:8070/
   EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-service:8761/eureka/
-  SPRING_DATASOURCE_URL: jdbc:mysql://${MYSQL_HOST:localhost}:3306/awb?createDatabaseIfNotExist=true
-  SPRING_DATASOURCE_USERNAME: root
-  SPRING_DATASOURCE_PASSWORD: root
-  SPRING_JPA_DATABASE-PLATFORM: org.hibernate.dialect.MySQLDialect
-  SPRING_JPA_HIBERNATE_DDL-AUTO: update
+  SPRING_DATASOURCE_URL: jdbc:mysql://10.8.3.245:3306/awb?createDatabaseIfNotExist=true
+#  SPRING_DATASOURCE_USERNAME: root
+#  SPRING_DATASOURCE_PASSWORD: root
+#  SPRING_JPA_DATABASE-PLATFORM: org.hibernate.dialect.MySQLDialect
+#  SPRING_JPA_HIBERNATE_DDL-AUTO: update

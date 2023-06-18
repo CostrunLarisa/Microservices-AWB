@@ -39,6 +39,7 @@ public class Client extends RepresentationModel<Client> {
 
     @NotBlank(message = "Phone number cannot be null")
     @NotEmpty(message = "Phone number cannot be empty")
+    @Column(name = "phone_number")
     @Pattern(regexp = "^\\d{10}$")
     private String phoneNumber;
 }

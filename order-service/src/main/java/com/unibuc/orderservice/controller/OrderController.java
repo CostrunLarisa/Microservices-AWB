@@ -69,7 +69,7 @@ public class OrderController {
                 .stream()
                 .map(order -> {
                     OrderDto dto = orderMapper.entityToDto(order);
-                    Link selfLink = linkTo(methodOn(OrderController.class).orderService.getByClientEmail(order.getClientEmail())).withSelfRel();
+                    Link selfLink = linkTo(methodOn(OrderController.class).getByClientEmail(order.getClientEmail())).withSelfRel();
                     dto.add(selfLink);
                     return dto;
                 }).collect(Collectors.toList());

@@ -7,6 +7,7 @@ import org.springframework.hateoas.RepresentationModel;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "products")
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
@@ -27,7 +28,9 @@ public class Product extends RepresentationModel<Product> {
     private String description;
     @NonNull
     private String producer;
+
     @NonNull
+    @Column(name = "produced_date")
     private LocalDate producedDate;
 
     public Product() {

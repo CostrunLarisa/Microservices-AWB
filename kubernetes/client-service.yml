@@ -36,6 +36,21 @@ spec:
                 configMapKeyRef:
                   name: config
                   key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: config
+                  key: SPRING_DATASOURCE_URL
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-vaults
+                  key: user
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-vaults
+                  key: password
 
 ---
 

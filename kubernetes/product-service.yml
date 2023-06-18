@@ -44,12 +44,12 @@ spec:
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: mysql-vaults
+                  name: mysql-secret
                   key: user
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysql-vaults
+                  name: mysql-secret
                   key: password
 
 ---

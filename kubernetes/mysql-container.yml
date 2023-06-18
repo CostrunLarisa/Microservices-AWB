@@ -11,7 +11,7 @@ spec:
   accessModes:
     - ReadOnlyMany
   hostPath:
-    path: /var/lib/mysql-storage
+    path: /var/log/mysql-storage
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

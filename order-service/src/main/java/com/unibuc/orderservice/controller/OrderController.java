@@ -19,7 +19,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
@@ -44,6 +47,10 @@ public class OrderController {
 
     private OrderMapper orderMapper = new OrderMapper();
 
+    @Value("${msg:Config Server is not working. Please check...}")
+    private String msg;
+
+    private Logger LOGGER = LoggerFactory.getLogger(ClientController.class);
 
     @Autowired
     public OrderController(ClientServiceProxy clientServiceProxy, ProductServiceProxy productServiceProxy, OrderService orderService) {
@@ -83,12 +90,16 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<Order> addOrder(@Valid @RequestBody OrderDto newOrder) {
 
+        LOGGER.info("Aiciiii");
         Order order= orderMapper.dtoToEntity(newOrder);
-
+        LOGGER.info("Hello");
         float price = productServiceProxy.getByName(order.getProductName()).getBody().getPrice();
+        LOGGER.info("after proxy");
         price= price * order.getQuantity();
         order.setTotalPrice(price);
         orderService.addNewOrder(order);
+
+        LOGGER.info("Here");
 
         Link getAllOrdersLink = linkTo(methodOn(OrderController.class).orderService.getAllOrders())
                 .withRel("getAllOrders");

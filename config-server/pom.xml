@@ -17,8 +17,29 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-validator</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.17.Final</version>
         </dependency>
     </dependencies>
 
@@ -42,14 +63,6 @@
 
     </dependencyManagement>
 <build>
-    <resources>
-        <resource>
-            <directory>src/main/resources</directory>
-            <includes>
-                <include>application.properties</include>
-            </includes>
-        </resource>
-    </resources>
     <plugins>
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>

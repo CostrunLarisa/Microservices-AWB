@@ -19,7 +19,7 @@ spec:
           image: costrunlarisa/eureka-server:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8071
+            - containerPort: 8761
           env:
             - name: SPRING_CONFIG_IMPORT
               valueFrom:
@@ -44,5 +44,5 @@ spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 8071
-      targetPort: 8071
+      port: 8761
+      targetPort: 8761

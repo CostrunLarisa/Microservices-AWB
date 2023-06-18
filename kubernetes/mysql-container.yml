@@ -9,7 +9,7 @@ spec:
   capacity:
     storage: 20Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadOnlyMany
   hostPath:
     path: /var/lib/mysql-storage
 ---

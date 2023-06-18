@@ -1,6 +1,5 @@
 package com.unibuc.orderservice.repository;
 
-import com.unibuc.clientservice.domain.model.Client;
 import com.unibuc.orderservice.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

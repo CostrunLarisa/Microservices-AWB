@@ -1,7 +1,6 @@
 package com.unibuc.orderservice.mapper;
 
-import com.unibuc.clientservice.domain.model.Client;
-import com.unibuc.clientservice.domain.model.dto.ClientDto;
+
 import com.unibuc.orderservice.model.Order;
 import com.unibuc.orderservice.model.OrderDto;
 

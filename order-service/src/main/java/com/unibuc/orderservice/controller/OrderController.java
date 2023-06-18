@@ -1,17 +1,10 @@
 package com.unibuc.orderservice.controller;
 
-import com.netflix.discovery.converters.Auto;
-import com.unibuc.clientservice.controller.ClientController;
-import com.unibuc.clientservice.domain.model.Client;
-import com.unibuc.clientservice.domain.model.dto.ClientDto;
-import com.unibuc.clientservice.service.ClientService;
-import com.unibuc.clientservice.utils.ClientMapper;
 import com.unibuc.orderservice.mapper.OrderMapper;
 import com.unibuc.orderservice.model.Order;
 import com.unibuc.orderservice.model.OrderDto;
 import com.unibuc.orderservice.service.ClientServiceProxy;
 import com.unibuc.orderservice.service.OrderService;
-import com.unibuc.orderservice.service.ProductResponse;
 import com.unibuc.orderservice.service.ProductServiceProxy;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -50,7 +43,7 @@ public class OrderController {
     @Value("${msg:Config Server is not working. Please check...}")
     private String msg;
 
-    private Logger LOGGER = LoggerFactory.getLogger(ClientController.class);
+    private Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
     @Autowired
     public OrderController(ClientServiceProxy clientServiceProxy, ProductServiceProxy productServiceProxy, OrderService orderService) {

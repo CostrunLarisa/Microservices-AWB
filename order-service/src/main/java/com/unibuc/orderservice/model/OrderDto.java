@@ -1,9 +1,7 @@
 package com.unibuc.orderservice.model;
 
-import com.unibuc.clientservice.domain.model.dto.ClientDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.springframework.hateoas.RepresentationModel;
 
